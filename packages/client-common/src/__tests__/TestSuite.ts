@@ -60,7 +60,22 @@ export class TestSuite {
     appIdEnv: string = 'ALGOLIA_APPLICATION_ID_1',
     apiKeyEnv: string = 'ALGOLIA_ADMIN_KEY_1'
   ) {
-    let client = this.algoliasearch(`${process.env[appIdEnv]}`, `${process.env[apiKeyEnv]}`);
+    const temporaryClient = this.algoliasearch(
+      `${process.env[appIdEnv]}`,
+      `${process.env[apiKeyEnv]}`
+    );
+
+    const host = temporaryClient.transporter.hosts[1];
+
+    let client = this.algoliasearch(`${process.env[appIdEnv]}`, `${process.env[apiKeyEnv]}`, {
+      // For our CTS, we always use the we the same host, otherwise
+      // we take the risk of asserting that something got saved in
+      // different hosts. Here is an example:
+      // 1. saveObject(...) // host-1
+      // 2. getObject(...) // failed on host-1 due timeout
+      //    retry on getObject(...) // object not in host-2 yet!
+      hosts: Array(4).fill(host),
+    });
 
     if (testing.isBrowserLite()) {
       // @ts-ignore

@@ -8,7 +8,7 @@ const testSuite = new TestSuite('settings');
 afterAll(() => testSuite.cleanUp());
 
 // eslint-disable-next-line no-console
-console.log('----');
+console.log('---- 2');
 
 // eslint-disable-next-line no-console
 console.log(testSuite.makeIndexName());

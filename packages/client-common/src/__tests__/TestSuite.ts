@@ -65,7 +65,7 @@ export class TestSuite {
       `${process.env[apiKeyEnv]}`
     );
 
-    const host = temporaryClient.transporter.hosts[1];
+    const host = temporaryClient.transporter.hosts[2];
 
     let client = this.algoliasearch(`${process.env[appIdEnv]}`, `${process.env[apiKeyEnv]}`, {
       // For our CTS, we always use the we the same host, otherwise

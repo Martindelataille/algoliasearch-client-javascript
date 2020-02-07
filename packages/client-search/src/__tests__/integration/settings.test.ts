@@ -7,6 +7,9 @@ const testSuite = new TestSuite('settings');
 
 afterAll(() => testSuite.cleanUp());
 
+// eslint-disable-next-line no-console
+console.log(testSuite.makeIndexName());
+
 test(testSuite.testName, async () => {
   const index = testSuite.makeIndex();
   await index.saveObject(createFaker().object('foo')).wait();
